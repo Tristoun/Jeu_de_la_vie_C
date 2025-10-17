@@ -1,0 +1,5 @@
+#define DEFAULT_WIDTH 10
+#define DEFAULT_HEIGHT 10
+
+#define CELL_CHECK 8
+#define COORD 2
