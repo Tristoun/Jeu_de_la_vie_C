@@ -8,7 +8,7 @@ int main() {
     srand(time(NULL));
 
     grid Grid;
-
+    printf("--Projet Jeu De La Vie En C--");
     Grid = generate_grid(0, 0); // 0 0 for default values
     fill_random_grid(&Grid);
     show_grid(&Grid);
