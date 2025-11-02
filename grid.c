@@ -89,3 +89,43 @@ int num_neighbors(grid *Grid, cell Cell) {
 
     return nb;
 }
+
+int get_next_state(grid* Grid, int x, int y) {
+    // Récupère le nombre de voisins vivants
+    int alive_neighbors = num_neighbors(Grid, Grid->content[x][y]);
+
+    int current_state = Grid->content[x][y].state;
+
+    if (current_state == 1) {
+        // Cellule vivante survit avec 2 ou 3 voisins
+        if (alive_neighbors == 2 || alive_neighbors == 3)
+            return 1;
+        else
+            return 0;
+    }
+    else {
+        // Cellule morte naît avec exactement 3 voisins
+        if (alive_neighbors == 3)
+            return 1;
+        else
+            return 0;
+    }
+}
+
+
+void next_generation(grid* current, grid* next) {
+    int width = current->width;
+    int height = current->height;
+
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            
+            int next_state = get_next_state(current, i, j);
+
+            // Mise à jour du prochain monde
+            next->content[i][j].state = next_state;
+            next->content[i][j].x = i;
+            next->content[i][j].y = j;
+        }
+    }
+}

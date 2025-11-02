@@ -21,5 +21,10 @@ void show_grid(grid *Grid);
 
 int num_neighbors(grid *Grid, cell Cell);
 
+int get_next_state(grid* Grid, int x, int y);
+
+void next_generation(grid* current, grid* next);
+
+
 
 #endif
