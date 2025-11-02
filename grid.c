@@ -81,7 +81,9 @@ int num_neighbors(grid *Grid, cell Cell) {
     for (int i=0; i<CELL_CHECK; i++) {
         int x_voisins = lst_voisins[i][0];
         int y_voisins = lst_voisins[i][1];
-        printf("Checking coord of cell (%d, %d)\n", x_voisins, y_voisins);
+        //printf("Checking coord of cell (%d, %d)\n", x_voisins, y_voisins);
+        if (x_voisins < 0 || x_voisins >= Grid->width || y_voisins < 0 || y_voisins >= Grid->height)
+            continue;
         if(get_cell_state(Grid->content[x_voisins][y_voisins]) == 1) {
             nb ++;
         }
