@@ -12,10 +12,7 @@ Ce fichier gère les cellules, leur vie
 #include "cell.h"
 #include "constant.h"
 
-int get_cell_state(cell Cell) {
-    // Donne l'état de la cellule actuellement (vivant ou morte)
-    return Cell.state; //1 si vivante, 0 si morte
-} 
+
 
 
 

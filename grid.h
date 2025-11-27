@@ -1,30 +1,25 @@
-#
 #ifndef GRID_H
 #define GRID_H
 
-#include "cell.h"
-#include "constant.h"
+#include <stdint.h>
 
-#ifndef grid 
+#define MAX_MEMORY_BYTES (64 * 1024)
 
-    typedef struct grid {
-        int width, height;
-        cell content[DEFAULT_WIDTH][DEFAULT_HEIGHT]; //Toutes les cellules sont mortes
-    } grid;
-#endif
+typedef struct {
+    int width, height;
+    int words_per_row;
+    uint64_t* data;
+} grid;
 
 grid generate_grid(int width, int height);
-
-void fill_random_grid(grid *Grid);
-
-void show_grid(grid *Grid);
-
-int num_neighbors(grid *Grid, cell Cell);
-
-int get_next_state(grid* Grid, int x, int y);
-
+void fill_random_grid(grid* g);
+void show_grid(const grid* g);
+int get_cell(const grid* g, int x, int y);
+void set_cell(grid* g, int x, int y, int state);
+int num_neighbors(const grid* g, int x, int y);
+int get_next_state(const grid* g, int x, int y);
 void next_generation(grid* current, grid* next);
-
+void free_grid(grid* g);
 
 
 #endif

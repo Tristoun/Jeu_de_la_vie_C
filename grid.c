@@ -1,133 +1,117 @@
-/*
-Gestion de la grille
-*/
-
-#include <stdlib.h>
 #include <stdio.h>
-
+#include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+#include <time.h>
 #include "grid.h"
+#include "constant.h"
 
+//  Création de la grille
 grid generate_grid(int width, int height) {
 
-    //Genere la grilel
+    if (width <= 0)  width = DEFAULT_WIDTH;
+    if (height <= 0) height = DEFAULT_HEIGHT;
 
-    if(width == 0 || height == 0) { //Si notre grille est celle par défaut retourner une grille classique
-        grid default_grid;
-        default_grid.width = DEFAULT_WIDTH;
-        default_grid.height = DEFAULT_HEIGHT;
-        return default_grid;
-    }
-    else {
-        grid grille;
-        grille.width = width;
-        grille.height = height;
-        return grille;
-        //Besoin d'allouer dynamiquement la taille de notre nouvelle grille
+    grid g;
+    g.width  = width;
+    g.height = height;
+
+    g.words_per_row = (width + 63) / 64;
+    g.data = calloc(g.words_per_row * height, sizeof(uint64_t));
+
+    return g;
+}
+
+//  Lecture d'une cellule (bitboard)
+int get_cell(const grid* g, int x, int y) {
+    if (x < 0 || x >= g->width || y < 0 || y >= g->height)
+        return 0;
+
+    uint64_t word = g->data[y * g->words_per_row + (x >> 6)];
+    uint64_t mask = (uint64_t)1 << (x & 63);
+
+    return (word & mask) != 0;
+}
+
+//  Écriture d'une cellule (bitboard)
+void set_cell(grid* g, int x, int y, int state) {
+    if (x < 0 || x >= g->width || y < 0 || y >= g->height)
+        return;
+
+    uint64_t* word = &g->data[y * g->words_per_row + (x >> 6)];
+    uint64_t mask = (uint64_t)1 << (x & 63);
+
+    if (state)
+        *word |= mask;
+    else
+        *word &= ~mask;
+}
+
+//  Remplir la grille aléatoirement
+void fill_random_grid(grid* g) {
+    for (int y = 0; y < g->height; y++) {
+        for (int x = 0; x < g->width; x++) {
+            set_cell(g, x, y, rand() % 2);
+        }
     }
 }
 
-
-void fill_random_grid(grid *Grid) {
-    int wi = Grid->width;
-    int hei = Grid->height;
-
-    for (int i =0; i<wi; i++) {
-        for (int j=0; j<hei; j++) {
-            int value = rand() % 2;
-            Grid->content[i][j].x = i;
-            Grid->content[i][j].y = j;
-            Grid->content[i][j].state = value;
-            printf("%d", value);
+//  Affichage de la grille
+void show_grid(const grid* g) {
+    for (int y = 0; y < g->height; y++) {
+        for (int x = 0; x < g->width; x++) {
+            printf("%c", get_cell(g, x, y) ? 'X' : '-');
         }
         printf("\n");
     }
 }
 
+//  Compte les voisins vivants
+int num_neighbors(const grid* g, int x, int y) {
 
-void show_grid(grid *Grid) {
-    int wi = Grid->width;
-    int hei = Grid->height;
+    int count = 0;
 
-    for (int i =0; i<wi; i++) {
-        for (int j=0; j<hei; j++) {
-            if(Grid->content[i][j].state == 1) {
-                printf("X");
-            }
-            else {
-                printf("-");
-            }
-        }
-        printf("\n");
-    }
-}
+    for (int dy = -1; dy <= 1; dy++) {
+        for (int dx = -1; dx <= 1; dx++) {
 
-int num_neighbors(grid *Grid, cell Cell) {
-    //Regarde le nombre de voisins vivantes
-    int nb = 0; //Nombre de voisins
-    int x = Cell.x; 
-    int y = Cell.y;
-    int lst_voisins[CELL_CHECK][COORD] = {
-        {x-1, y-1}, 
-        {x-1, y}, 
-        {x-1, y+1},
-        {x, y-1},
-        {x, y+1},
-        {x+1, y-1},
-        {x+1, y},
-        {x+1, y+1}
-    };
+            if (dx == 0 && dy == 0) continue; // exclut la cellule elle-même
 
-
-    for (int i=0; i<CELL_CHECK; i++) {
-        int x_voisins = lst_voisins[i][0];
-        int y_voisins = lst_voisins[i][1];
-        //printf("Checking coord of cell (%d, %d)\n", x_voisins, y_voisins);
-        if (x_voisins < 0 || x_voisins >= Grid->width || y_voisins < 0 || y_voisins >= Grid->height)
-            continue;
-        if(get_cell_state(Grid->content[x_voisins][y_voisins]) == 1) {
-            nb ++;
+            count += get_cell(g, x + dx, y + dy);
         }
     }
 
-    return nb;
+    return count;
 }
 
-int get_next_state(grid* Grid, int x, int y) {
-    // Récupère le nombre de voisins vivants
-    int alive_neighbors = num_neighbors(Grid, Grid->content[x][y]);
+//  Règles du jeu
+int get_next_state(const grid* g, int x, int y) {
 
-    int current_state = Grid->content[x][y].state;
+    int alive = get_cell(g, x, y);
+    int n = num_neighbors(g, x, y);
 
-    if (current_state == 1) {
-        // Cellule vivante survit avec 2 ou 3 voisins
-        if (alive_neighbors == 2 || alive_neighbors == 3)
-            return 1;
-        else
-            return 0;
-    }
-    else {
-        // Cellule morte naît avec exactement 3 voisins
-        if (alive_neighbors == 3)
-            return 1;
-        else
-            return 0;
+    if (alive) {
+        return (n == 2 || n == 3);
+    } else {
+        return (n == 3);
     }
 }
 
-
+//  Passe de current → next
 void next_generation(grid* current, grid* next) {
-    int width = current->width;
-    int height = current->height;
 
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            
-            int next_state = get_next_state(current, i, j);
+    // on vide next avant utilisation
+    memset(next->data, 0, next->words_per_row * next->height * sizeof(uint64_t));
 
-            // Mise à jour du prochain monde
-            next->content[i][j].state = next_state;
-            next->content[i][j].x = i;
-            next->content[i][j].y = j;
+    for (int y = 0; y < current->height; y++) {
+        for (int x = 0; x < current->width; x++) {
+
+            int s = get_next_state(current, x, y);
+            set_cell(next, x, y, s);
         }
     }
+}
+
+void free_grid(grid* g) {
+    if (g->data) free(g->data);
+    g->data = NULL;
 }
