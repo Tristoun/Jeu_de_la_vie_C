@@ -3,16 +3,10 @@
 #include <stdlib.h>
 
 #include "grid.h"
+#include "timing.h" // AJOUT IMPORTANT
 
-
-#include <time.h>
-
-void waitFor (unsigned int secs) {
-    unsigned int retTime = time(0) + secs;   // Get finishing time.
-    while (time(0) < retTime);               // Loop until it arrives.
-}
-
-int main() {
+int main()
+{
     srand(time(NULL));
 
     printf("-- Projet Jeu de la Vie (Debug - Toutes générations visibles) --\n");
@@ -22,19 +16,28 @@ int main() {
 
     // ======= CHOISIS LE MODE =======
     Grid.mode = BOUNDARY_EDGE;
-    //Grid.mode = BOUNDARY_TORUS;
-    //Grid.mode = BOUNDARY_MIRROR;
-    //Grid.mode = BOUNDARY_ALIVE_RIM;
+    // Grid.mode = BOUNDARY_TORUS;
+    // Grid.mode = BOUNDARY_MIRROR;
+    // Grid.mode = BOUNDARY_ALIVE_RIM;
     // ================================
 
     fill_random_grid(&Grid);
 
     printf("\nMode de bordure utilisé : ");
-    switch (Grid.mode) {
-        case BOUNDARY_EDGE:      printf("EDGE\n"); break;
-        case BOUNDARY_TORUS:     printf("TORUS\n"); break;
-        case BOUNDARY_MIRROR:    printf("MIRROR\n"); break;
-        case BOUNDARY_ALIVE_RIM: printf("ALIVE_RIM\n"); break;
+    switch (Grid.mode)
+    {
+    case BOUNDARY_EDGE:
+        printf("EDGE\n");
+        break;
+    case BOUNDARY_TORUS:
+        printf("TORUS\n");
+        break;
+    case BOUNDARY_MIRROR:
+        printf("MIRROR\n");
+        break;
+    case BOUNDARY_ALIVE_RIM:
+        printf("ALIVE_RIM\n");
+        break;
     }
 
     // Affiche la grille initiale
@@ -46,8 +49,8 @@ int main() {
     Next.mode = Grid.mode;
 
     // Afficher les 20 générations
-    for (int gen = 1; gen <= 20; gen++) {
-
+    for (int gen = 1; gen <= 20; gen++)
+    {
         next_generation(&Grid, &Next);
 
         printf("\n=== Generation %d ===\n", gen);
@@ -58,17 +61,26 @@ int main() {
         Grid = Next;
         Next = tmp;
 
+        // PAUSE 1 seconde (remplace waitFor)
+        struct timespec req = {1, 0};
+        nanosleep(&req, NULL);
 
-        waitFor(1);
+        // Efface l’écran après l’affichage
         fputs("\033[2J", stdout);
-        fflush(stdout);    
+        fflush(stdout);
     }
+
+    // === MESURE TEMPS RÉEL ===
+    printf("\n=== Mesure temps réel (1000 générations) ===\n");
+
+    timing_stats ts = measure_generations(&Grid, &Next, 1000, 60);
+
+    printf("Temps moyen : %.3f ms\n", ts.mean_ms);
+    printf("Pire cas    : %.3f ms\n", ts.worst_ms);
+    printf("Jitter      : %.3f ms\n", ts.jitter_ms);
 
     free_grid(&Grid);
     free_grid(&Next);
 
     return 0;
 }
-
-
-// gcc main.c grid.c cell.c -Wall -Wextra -o jeu
