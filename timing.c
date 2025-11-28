@@ -4,80 +4,90 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 
+// Convertit la différence de temps en millisecondes
 static double diff_ms(struct timespec a, struct timespec b)
 {
     return (b.tv_sec - a.tv_sec) * 1000.0 + (b.tv_nsec - a.tv_nsec) / 1e6;
 }
 
-timing_stats measure_generations(grid *current, grid *next, int generations, int target_hz)
+// Mesure le temps total par frame et retourne des stats
+timing_stats measure_generations_total_time(grid *current, grid *next, int generations, int target_hz)
 {
-
     timing_stats stats = {0};
 
-    double *times = calloc(generations, sizeof(double));
-    if (!times)
+    if (target_hz <= 0) target_hz = 60;
+    long interval_ns = 1000000000L / target_hz;
+
+    double *frame_times = calloc(generations, sizeof(double));
+    if (!frame_times)
     {
         fprintf(stderr, "Erreur alloc timings\n");
         return stats;
     }
 
-    long target_ns = 0;
-    if (target_hz > 0)
-        target_ns = 1000000000L / target_hz;
+    struct timespec next_frame;
+    clock_gettime(CLOCK_MONOTONIC, &next_frame);
 
     for (int g = 0; g < generations; g++)
     {
+        struct timespec frame_start, frame_end, t1, t2;
+        clock_gettime(CLOCK_MONOTONIC, &frame_start);
 
-        struct timespec t1, t2;
+        // Temps de calcul
         clock_gettime(CLOCK_MONOTONIC, &t1);
-
-        // calcul d'une génération
         next_generation(current, next);
-
         clock_gettime(CLOCK_MONOTONIC, &t2);
+        double calc_ms = diff_ms(t1, t2);
 
-        // durée réelle de calcul
-        double ms = diff_ms(t1, t2);
-        times[g] = ms;
-
-        // swap des grilles
+        // Swap des grilles
         grid tmp = *current;
         *current = *next;
         *next = tmp;
 
-        // maintien de cadence si demandé
-        if (target_ns > 0)
+        // Maintien exact de la cadence
+        next_frame.tv_nsec += interval_ns;
+        while (next_frame.tv_nsec >= 1000000000L)
         {
-            long elapsed_ns =
-                (t2.tv_sec - t1.tv_sec) * 1000000000L +
-                (t2.tv_nsec - t1.tv_nsec);
-
-            long remaining = target_ns - elapsed_ns;
-            if (remaining > 0)
-            {
-                struct timespec req = {
-                    .tv_sec = remaining / 1000000000L,
-                    .tv_nsec = remaining % 1000000000L};
-                nanosleep(&req, NULL);
-            }
+            next_frame.tv_nsec -= 1000000000L;
+            next_frame.tv_sec += 1;
         }
+
+        struct timespec now;
+        clock_gettime(CLOCK_MONOTONIC, &now);
+
+        long wait_ns = (next_frame.tv_sec - now.tv_sec) * 1000000000L +
+                       (next_frame.tv_nsec - now.tv_nsec);
+
+        if (wait_ns > 0)
+        {
+            struct timespec req = { .tv_sec = wait_ns / 1000000000L,
+                                    .tv_nsec = wait_ns % 1000000000L };
+            nanosleep(&req, NULL);
+        }
+
+        clock_gettime(CLOCK_MONOTONIC, &frame_end);
+        double total_ms = diff_ms(frame_start, frame_end);
+
+        // Stocke le temps total par frame
+        frame_times[g] = total_ms;
+
+        // Optionnel : affichage du temps de calcul + total pour debug
+        // printf("Gen %4d : calcul = %.3f ms, total = %.3f ms\n", g, calc_ms, total_ms);
     }
 
-    // Calcul stats
-    double sum = 0, worst = 0;
+    // Calcul des statistiques sur le temps total par frame
+    double sum = 0.0, worst = 0.0;
     for (int i = 0; i < generations; i++)
     {
-        sum += times[i];
-        if (times[i] > worst)
-            worst = times[i];
+        sum += frame_times[i];
+        if (frame_times[i] > worst) worst = frame_times[i];
     }
 
     stats.mean_ms = sum / generations;
     stats.worst_ms = worst;
-    stats.jitter_ms = stats.worst_ms - stats.mean_ms;
+    stats.jitter_ms = worst - stats.mean_ms;
 
-    free(times);
+    free(frame_times);
     return stats;
 }

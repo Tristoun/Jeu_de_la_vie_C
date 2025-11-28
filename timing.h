@@ -10,6 +10,5 @@ typedef struct
     double jitter_ms;
 } timing_stats;
 
-timing_stats measure_generations(grid *current, grid *next, int generations, int target_hz);
-
+timing_stats measure_generations_total_time(grid *current, grid *next, int generations, int target_hz);
 #endif

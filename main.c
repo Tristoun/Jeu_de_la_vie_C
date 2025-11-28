@@ -79,8 +79,8 @@ int main(int argc, char* argv[]) //argc = nombres de paramètres, argv = paramè
     // Grid.mode = BOUNDARY_ALIVE_RIM;
     // ================================
     Grid.mode = mode;
-    // fill_random_grid(&Grid);
-    load_grid(input_filename, &Grid);
+    fill_random_grid(&Grid);
+    // load_grid(input_filename, &Grid);
     printf("\nMode de bordure utilisé : ");
     switch (Grid.mode)
     {
@@ -118,9 +118,8 @@ int main(int argc, char* argv[]) //argc = nombres de paramètres, argv = paramè
         Grid = Next;
         Next = tmp;
 
-        // PAUSE 1 seconde (remplace waitFor)
-        struct timespec req = {0, 200000000};  // 0.2 seconds
-        nanosleep(&req, NULL);
+        // struct timespec req = {0, 100000000};  // 0.2 seconds
+        // nanosleep(&req, NULL);
 
         // Efface l’écran après l’affichage
         if(gen < gens) {
@@ -133,7 +132,7 @@ int main(int argc, char* argv[]) //argc = nombres de paramètres, argv = paramè
     // === MESURE TEMPS RÉEL ===
     printf("\n=== Mesure temps réel (1000 générations) ===\n");
 
-    timing_stats ts = measure_generations(&Grid, &Next, 1000, 60);
+    timing_stats ts = measure_generations_total_time(&Grid, &Next, 1000, target_hz);
 
     printf("Temps moyen : %.3f ms\n", ts.mean_ms);
     printf("Pire cas    : %.3f ms\n", ts.worst_ms);
