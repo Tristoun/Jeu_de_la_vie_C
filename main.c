@@ -4,6 +4,14 @@
 
 #include "grid.h"
 
+
+#include <time.h>
+
+void waitFor (unsigned int secs) {
+    unsigned int retTime = time(0) + secs;   // Get finishing time.
+    while (time(0) < retTime);               // Loop until it arrives.
+}
+
 int main() {
     srand(time(NULL));
 
@@ -49,6 +57,11 @@ int main() {
         grid tmp = Grid;
         Grid = Next;
         Next = tmp;
+
+
+        waitFor(1);
+        fputs("\033[2J", stdout);
+        fflush(stdout);    
     }
 
     free_grid(&Grid);
