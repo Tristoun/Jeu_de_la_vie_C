@@ -1,18 +1,76 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "grid.h"
 #include "timing.h" 
+#include "constant.h"
 
-int main()
+
+
+int main(int argc, char* argv[]) //argc = nombres de paramètres, argv = paramètres entrées 
 {
     srand(time(NULL));
+    int width = 20, height = 20;
+    int gens = 100;
+    boundary_mode mode = BOUNDARY_EDGE;
+    char* input_filename = malloc(strlen("glider.txt") + 1);
+    strcpy(input_filename, "glider.txt");
+    char* output_filename = malloc(strlen("end.txt") + 1);
+    strcpy(output_filename, "end.txt");
+    int target_hz = 60;
+
+
+    for (int i =0; i<argc; i++) {
+        if(strcmp(argv[i], "--width") == 0) {
+            width = atoi(argv[i+1]);
+        }
+        else if (strcmp(argv[i], "--height") == 0) {
+            height = atoi(argv[i+1]);
+        }
+        else if (strcmp(argv[i], "--gens") == 0){
+            gens = atoi(argv[i+1]);
+        }
+        else if (strcmp(argv[i], "--boundary") == 0) {
+            char mode_string[10];
+            strcpy(mode_string, argv[i+1]);
+            if (strcmp(mode_string, "edge") == 0) {
+            mode = BOUNDARY_EDGE;
+            }
+            else if (strcmp(mode_string, "torus") == 0) {
+                mode = BOUNDARY_TORUS;
+            }
+            else if (strcmp(mode_string, "mirror") == 0) {
+                mode = BOUNDARY_MIRROR;
+            }
+            else if (strcmp(mode_string, "rim") == 0) {
+                mode = BOUNDARY_ALIVE_RIM;
+            }
+            else {
+                printf("Unknown mode: %s\n", mode_string);
+            }
+
+        }
+        else if (strcmp(argv[i], "--in") == 0){
+            input_filename = realloc(input_filename, strlen(argv[i+1]) + 1);
+            strcpy(input_filename, argv[i+1]);
+        }
+
+        else if (strcmp(argv[i], "--out") == 0){
+            output_filename = realloc(output_filename, strlen(argv[i+1]) + 1);
+            strcpy(output_filename, argv[i+1]);
+        }
+        else if (strcmp(argv[i], "--target-hz") == 0){
+            target_hz = atoi(argv[i+1]);
+        }
+    }
+
 
     printf("-- Projet Jeu de la Vie (Debug - Toutes générations visibles) --\n");
 
     // Petite grille plus lisible pour debug
-    grid Grid = generate_grid(20, 20);
+    grid Grid = generate_grid(width, height);
 
     // ======= CHOISIS LE MODE =======
     // Grid.mode = BOUNDARY_EDGE;
@@ -20,9 +78,9 @@ int main()
     // Grid.mode = BOUNDARY_MIRROR;
     // Grid.mode = BOUNDARY_ALIVE_RIM;
     // ================================
-
+    Grid.mode = mode;
     // fill_random_grid(&Grid);
-    load_grid("glider.txt", &Grid);
+    load_grid(input_filename, &Grid);
     printf("\nMode de bordure utilisé : ");
     switch (Grid.mode)
     {
@@ -48,8 +106,7 @@ int main()
     grid Next = generate_grid(Grid.width, Grid.height);
     Next.mode = Grid.mode;
 
-    // Afficher les 20 générations
-    for (int gen = 1; gen <= 20; gen++)
+    for (int gen = 1; gen <= gens; gen++)
     {
         next_generation(&Grid, &Next);
 
@@ -62,14 +119,17 @@ int main()
         Next = tmp;
 
         // PAUSE 1 seconde (remplace waitFor)
-        struct timespec req = {0.2, 0};
+        struct timespec req = {0, 200000000};  // 0.2 seconds
         nanosleep(&req, NULL);
 
         // Efface l’écran après l’affichage
-        printf("\033[2J\033[1;1H");   
-        fflush(stdout);
+        if(gen < gens) {
+            printf("\033[2J\033[1;1H");   
+            fflush(stdout);
+        }
+
     }
-    write_final_grid("end.txt", &Grid);
+    write_final_grid(output_filename, &Grid);
     // === MESURE TEMPS RÉEL ===
     printf("\n=== Mesure temps réel (1000 générations) ===\n");
 
@@ -83,8 +143,6 @@ int main()
     free_grid(&Next);
 
     return 0;
-
-    // read_grid("glider.txt", 32);
 }
 
 
