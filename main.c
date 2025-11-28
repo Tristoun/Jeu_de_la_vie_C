@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include "grid.h"
-#include "timing.h" 
+#include "game.h" 
 #include "constant.h"
 
 
@@ -71,6 +71,7 @@ int main(int argc, char* argv[]) //argc = nombres de paramètres, argv = paramè
 
     // Petite grille plus lisible pour debug
     grid Grid = generate_grid(width, height);
+    grid Next = generate_grid(Grid.width, Grid.height);
 
     // ======= CHOISIS LE MODE =======
     // Grid.mode = BOUNDARY_EDGE;
@@ -79,6 +80,7 @@ int main(int argc, char* argv[]) //argc = nombres de paramètres, argv = paramè
     // Grid.mode = BOUNDARY_ALIVE_RIM;
     // ================================
     Grid.mode = mode;
+    Next.mode = Grid.mode;
     fill_random_grid(&Grid);
     // load_grid(input_filename, &Grid);
     printf("\nMode de bordure utilisé : ");
@@ -98,42 +100,9 @@ int main(int argc, char* argv[]) //argc = nombres de paramètres, argv = paramè
         break;
     }
 
-    // Affiche la grille initiale
-    printf("\n=== Generation 0 ===\n");
-    show_grid(&Grid);
-
-    // Grille suivante
-    grid Next = generate_grid(Grid.width, Grid.height);
-    Next.mode = Grid.mode;
-
-    for (int gen = 1; gen <= gens; gen++)
-    {
-        next_generation(&Grid, &Next);
-
-        printf("\n=== Generation %d ===\n", gen);
-        show_grid(&Next);
-
-        // échange simple des grilles
-        grid tmp = Grid;
-        Grid = Next;
-        Next = tmp;
-
-        // struct timespec req = {0, 100000000};  // 0.2 seconds
-        // nanosleep(&req, NULL);
-
-        // Efface l’écran après l’affichage
-        if(gen < gens) {
-            printf("\033[2J\033[1;1H");   
-            fflush(stdout);
-        }
-
-    }
+    timing_stats ts = play_game_live(&Grid, &Next, gens, target_hz);
     write_final_grid(output_filename, &Grid);
-    // === MESURE TEMPS RÉEL ===
-    printf("\n=== Mesure temps réel (1000 générations) ===\n");
-
-    timing_stats ts = measure_generations_total_time(&Grid, &Next, 1000, target_hz);
-
+    printf("\n=== Statistiques de la simulation ===\n");
     printf("Temps moyen : %.3f ms\n", ts.mean_ms);
     printf("Pire cas    : %.3f ms\n", ts.worst_ms);
     printf("Jitter      : %.3f ms\n", ts.jitter_ms);
