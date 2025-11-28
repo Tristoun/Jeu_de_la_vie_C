@@ -23,6 +23,49 @@ grid generate_grid(int width, int height) {
     return g;
 }
 
+
+void load_grid(char* FileName, grid* g) {
+    FILE* fptr;
+    fptr = fopen(FileName, "r");
+
+    char* grid_pack = (char*)malloc((g->width+1) * sizeof(char)); //To load the \0 too
+    int y = 0;
+    while(fgets(grid_pack, g->width+2, fptr)) { //\0 and \n
+        printf("%s\n", grid_pack);
+
+        for (int i=0; i<g->width; i++){
+            if(grid_pack[i] == 'X') {
+                set_cell(g, i, y, 1);
+            }
+            else {
+                set_cell(g, i, y, 0);
+            }
+        }
+        y++;
+    }
+    fclose(fptr);
+    free(grid_pack);
+} 
+
+void write_final_grid(char* FileName, const grid* g) {
+    FILE* file;
+    file = fopen(FileName, "w");
+
+    for(int i=0; i<g->height; i++) {
+        for(int j=0; j<g->width; j++) {
+            if(get_cell(g, j, i) == 1) {
+                fprintf(file, "X");
+            }
+            else {
+                fprintf(file, "-");
+            }
+        }
+        fprintf(file, " \n");
+    }
+
+    fclose(file);
+}
+
 int get_cell(const grid* g, int x, int y) {
 
     switch (g->mode) {

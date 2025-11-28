@@ -29,6 +29,6 @@ int num_neighbors(const grid* g, int x, int y);
 int get_next_state(const grid* g, int x, int y);
 void next_generation(grid* current, grid* next);
 void free_grid(grid* g);
-
+void write_final_grid(char* FileName, const grid* g);
 
 #endif

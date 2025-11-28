@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "grid.h"
-#include "timing.h" // AJOUT IMPORTANT
+#include "timing.h" 
 
 int main()
 {
@@ -12,17 +12,17 @@ int main()
     printf("-- Projet Jeu de la Vie (Debug - Toutes générations visibles) --\n");
 
     // Petite grille plus lisible pour debug
-    grid Grid = generate_grid(32, 16);
+    grid Grid = generate_grid(20, 20);
 
     // ======= CHOISIS LE MODE =======
-    Grid.mode = BOUNDARY_EDGE;
+    // Grid.mode = BOUNDARY_EDGE;
     // Grid.mode = BOUNDARY_TORUS;
     // Grid.mode = BOUNDARY_MIRROR;
     // Grid.mode = BOUNDARY_ALIVE_RIM;
     // ================================
 
-    fill_random_grid(&Grid);
-
+    // fill_random_grid(&Grid);
+    load_grid("glider.txt", &Grid);
     printf("\nMode de bordure utilisé : ");
     switch (Grid.mode)
     {
@@ -62,14 +62,14 @@ int main()
         Next = tmp;
 
         // PAUSE 1 seconde (remplace waitFor)
-        struct timespec req = {1, 0};
+        struct timespec req = {0.2, 0};
         nanosleep(&req, NULL);
 
         // Efface l’écran après l’affichage
-        fputs("\033[2J", stdout);
+        printf("\033[2J\033[1;1H");   
         fflush(stdout);
     }
-
+    write_final_grid("end.txt", &Grid);
     // === MESURE TEMPS RÉEL ===
     printf("\n=== Mesure temps réel (1000 générations) ===\n");
 
@@ -83,4 +83,9 @@ int main()
     free_grid(&Next);
 
     return 0;
+
+    // read_grid("glider.txt", 32);
 }
+
+
+// gcc main.c grid.c cell.c -Wall -Wextra -o jeu
