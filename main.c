@@ -7,29 +7,52 @@
 int main() {
     srand(time(NULL));
 
-    printf("--Projet Jeu De La Vie En C--\n");
+    printf("-- Projet Jeu de la Vie (Debug - Toutes générations visibles) --\n");
 
-    // Crée une grille par défaut (tu peux mettre 64x64 par ex.)
-    grid Grid = generate_grid(64, 64);
+    // Petite grille plus lisible pour debug
+    grid Grid = generate_grid(32, 16);
+
+    // ======= CHOISIS LE MODE =======
+    Grid.mode = BOUNDARY_EDGE;
+    //Grid.mode = BOUNDARY_TORUS;
+    //Grid.mode = BOUNDARY_MIRROR;
+    //Grid.mode = BOUNDARY_ALIVE_RIM;
+    // ================================
 
     fill_random_grid(&Grid);
 
-    printf("Grille initiale :\n");
+    printf("\nMode de bordure utilisé : ");
+    switch (Grid.mode) {
+        case BOUNDARY_EDGE:      printf("EDGE\n"); break;
+        case BOUNDARY_TORUS:     printf("TORUS\n"); break;
+        case BOUNDARY_MIRROR:    printf("MIRROR\n"); break;
+        case BOUNDARY_ALIVE_RIM: printf("ALIVE_RIM\n"); break;
+    }
+
+    // Affiche la grille initiale
+    printf("\n=== Generation 0 ===\n");
     show_grid(&Grid);
 
-    // Exemple : voisins de la cellule (5,5)
-    printf("\nVoisins de (5,5) : %d\n", num_neighbors(&Grid, 5, 5));
+    // Grille suivante
+    grid Next = generate_grid(Grid.width, Grid.height);
+    Next.mode = Grid.mode;
 
-    // Génération suivante
-    grid nextGrid = generate_grid(Grid.width, Grid.height);
-    next_generation(&Grid, &nextGrid);
+    // Afficher les 20 générations
+    for (int gen = 1; gen <= 20; gen++) {
 
-    printf("\n--- Generation suivante ---\n");
-    show_grid(&nextGrid);
+        next_generation(&Grid, &Next);
 
-    // Libération mémoire
+        printf("\n=== Generation %d ===\n", gen);
+        show_grid(&Next);
+
+        // échange simple des grilles
+        grid tmp = Grid;
+        Grid = Next;
+        Next = tmp;
+    }
+
     free_grid(&Grid);
-    free_grid(&nextGrid);
+    free_grid(&Next);
 
     return 0;
 }

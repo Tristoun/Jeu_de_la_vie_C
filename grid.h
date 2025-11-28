@@ -3,12 +3,21 @@
 
 #include <stdint.h>
 
+typedef enum {
+    BOUNDARY_EDGE,
+    BOUNDARY_TORUS,
+    BOUNDARY_MIRROR,
+    BOUNDARY_ALIVE_RIM
+} boundary_mode;
+
+
 #define MAX_MEMORY_BYTES (64 * 1024)
 
 typedef struct {
     int width, height;
     int words_per_row;
     uint64_t* data;
+    boundary_mode mode;
 } grid;
 
 grid generate_grid(int width, int height);

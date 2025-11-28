@@ -18,15 +18,46 @@ grid generate_grid(int width, int height) {
 
     g.words_per_row = (width + 63) / 64;
     g.data = calloc(g.words_per_row * height, sizeof(uint64_t));
+    g.mode = BOUNDARY_EDGE;  // mode par défaut
 
     return g;
 }
 
-//  Lecture d'une cellule (bitboard)
 int get_cell(const grid* g, int x, int y) {
-    if (x < 0 || x >= g->width || y < 0 || y >= g->height)
-        return 0;
 
+    switch (g->mode) {
+
+    case BOUNDARY_EDGE:
+        // Tout ce qui sort = mort
+        if (x < 0 || x >= g->width || y < 0 || y >= g->height)
+            return 0;
+        break;
+
+    case BOUNDARY_TORUS:
+        // Enroulement
+        if (x < 0) x += g->width;
+        if (x >= g->width) x -= g->width;
+        if (y < 0) y += g->height;
+        if (y >= g->height) y -= g->height;
+        break;
+
+    case BOUNDARY_MIRROR:
+        // Effet miroir
+        if (x < 0) x = -x;                     // réfléchit
+        if (x >= g->width) x = 2*g->width - x - 2;
+
+        if (y < 0) y = -y;
+        if (y >= g->height) y = 2*g->height - y - 2;
+        break;
+
+    case BOUNDARY_ALIVE_RIM:
+        // Tout ce qui sort = vivant
+        if (x < 0 || x >= g->width || y < 0 || y >= g->height)
+            return 1;
+        break;
+    }
+
+    // Lecture du bit dans le mot 64 bits
     uint64_t word = g->data[y * g->words_per_row + (x >> 6)];
     uint64_t mask = (uint64_t)1 << (x & 63);
 
