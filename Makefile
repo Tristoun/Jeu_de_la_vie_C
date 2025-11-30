@@ -8,4 +8,4 @@ $(TARGET): $(SRC)
 	gcc $(CFLAGS) $(SRC) -o $(TARGET)
 
 clean:
-	rm -f $(TARGET)
+	del /f /q $(TARGET).exe 2>nul || true

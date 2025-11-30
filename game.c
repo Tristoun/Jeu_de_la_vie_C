@@ -5,6 +5,43 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifdef _WIN32
+#include <windows.h>
+
+static void get_time_windows(struct timespec *ts)
+{
+    static LARGE_INTEGER freq;
+    static int freq_init = 0;
+    LARGE_INTEGER counter;
+
+    if (!freq_init)
+    {
+        QueryPerformanceFrequency(&freq);
+        freq_init = 1;
+    }
+
+    QueryPerformanceCounter(&counter);
+
+    ts->tv_sec = counter.QuadPart / freq.QuadPart;
+    ts->tv_nsec = (long)(((counter.QuadPart % freq.QuadPart) * 1000000000LL) / freq.QuadPart);
+}
+
+static void sleep_ns_windows(long ns)
+{
+    LARGE_INTEGER ft;
+    ft.QuadPart = -(ns / 100); // Windows en 100ns units
+
+    HANDLE timer = CreateWaitableTimer(NULL, TRUE, NULL);
+    SetWaitableTimer(timer, &ft, 0, NULL, NULL, FALSE);
+    WaitForSingleObject(timer, INFINITE);
+    CloseHandle(timer);
+}
+
+#define clock_gettime(a,b) get_time_windows(b)
+#define nanosleep(req,rem) sleep_ns_windows((req)->tv_nsec)
+
+#endif
+
 // Convertit la différence de temps en millisecondes
 static double diff_ms(struct timespec a, struct timespec b)
 {
