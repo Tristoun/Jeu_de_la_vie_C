@@ -81,8 +81,8 @@ int main(int argc, char* argv[]) //argc = nombres de paramètres, argv = paramè
     // ================================
     Grid.mode = mode;
     Next.mode = Grid.mode;
-    fill_random_grid(&Grid);
-    // load_grid(input_filename, &Grid);
+    // fill_random_grid(&Grid);
+    load_grid(input_filename, &Grid);
     printf("\nMode de bordure utilisé : ");
     switch (Grid.mode)
     {

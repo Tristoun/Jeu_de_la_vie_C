@@ -3,7 +3,8 @@
 	\usepackage[T1]{fontenc} % Encodage des caractères spéciaux
 	\usepackage{helvet} % Police équivalent Arial
 	\usepackage[french]{babel} % Localisation en français
-
+	\usepackage{float}  % à mettre dans le préambule
+	
 % Dimensions
 	\usepackage[margin=2cm]{geometry} % Marges
 	\setlength{\parindent}{0pt} % Largeur de l'alinéa
@@ -84,131 +85,302 @@
 	\tableofcontents % Table des matières
 	
 	\newpage
-	\section{Objectifs}
-	
-		Quel est l’objectif de ce document ?
+	\section {Conception}
+		\subsection{Struture}
+		Notre code se structure en plusieurs parties :\newline
+		\includegraphics[scale=0.55]{images/Logigrammejeuelavie.drawio.png} 
+		\newline \newline
+		La première étape est la récupérations des données de l'utulisateur, des paramètres sont passés lors de l'appel du programme tel que, la largeur (width), la hauteur (height), le nombres de générations (gens), la façon dont géré les bordures (boundary), le fichier de configuration (in), le fichier d'enregistrement (out) et enfin la fréquence choisi (target\_hz).
+		\newline
 		
-		Que va y trouver le lecteur ?
-	
-	\section{Glossaire}
-		\subsection{Termes}
-		
-			Renseigner ici sous forme de tableau les principaux termes techniques et leurs définitions.
-			
-		\subsection{Acronymes}
-		
-			Renseigner ici sous forme de tableau les principaux acronymes, leurs signification et leurs explication.
-			
-	\section{L'équipe}
-		\subsection{Présentation de l’équipe}
-			
-			Qui sont les membres qui composent l’équipe ?
-			
-			Quelles sont leurs compétences et qualités ?
-			
-		\subsection{Organisation de l’équipe}
-			
-			Comment est organisée l’équipe ? Comment est réparti le travail ?
-			
-		\subsection{Diagramme de Gantt}
-		
-			Comment est utilisé le temps alloué au projet ?
-			
-	\section{Contexte et problématique}
-		\subsection{Contexte}
-		
-			Quel est le contexte économique et ou sociétal du projet ?
-			
-			Comment est née l’invention / la technologie du projet, comment a-t-elle évolué ?
-			
-		\subsection{Problématique}
-		
-			À quelle problématique répond le projet ?
-			
-		\subsection{Spécifications techniques}
-		
-			Quelles sont les spécifications techniques du projet ?
-			
-			\textbf{NB} : Certains projets d’électronique à l’ECE n’en ont pas.
-			
-	\section{Conception}
-		\subsection{Architecture fonctionnelle}
-		
-			Quelle est l’architecture fonctionnelle du projet ?
-			
-			\textbf{NB} : Les fonctionnalités sont des verbes à l’infinitif suivi de compléments.
-			
-			À ce stade, aucun choix technique n’est fait.
-			
-		\subsection{Architecture matérielle}
-			
-			Quel matériel est utilisé et pourquoi ?
-			
-			Comment les différentes briques techniques sont connectées entre elles ?
-			
-			\textbf{NB} : Cela peut-être une schématique de circuit électronique.
-			
-		\subsection{Architecture logicielle}
-		
-			Comment fonctionne le programme ?
-			
-			\textbf{NB} : Présenter un algorigramme de votre code si vous en avez-un.
-	
-	\section{Développement}
-			
-		L’idée est de présenter ici comment ont été développés les différents blocs du projet. Cela peut rassembler des calculs théoriques, des choix techniques, etc. et surtout bien expliquer le concept clef derrière	sa fabrication. Le lecteur doit être capable de comprendre les enjeux techniques et de développer le module en question à l’aide de ces sous-sections.
-			
-		\subsection{Module 1}
-		\subsection{Module 2}
-		\subsection{Module 3}
-		
-	\section{Tests et validation}
-	
-		Une section au moins aussi importante que celle sur le développement.
-		
-		Il est question ici de montrer les performances techniques du système et de valider le développement module par module puis au global (intégration) en accord avec la partie IV.
-		
-		Chaque résultat (bien souvent des courbes) doit être décrit comme suit :
-		
+		\subsection{Développement}
+		Afin d'avoir une grille propre et optimisé nous créons une structure grid contenant les attributs :
 		\begin{itemize}
-			\item ce qui a été fait ;
-			\item ce que l’on est censé obtenir et critère de réussite du test ;
-			\item ce que l’on obtient ;
-			\item conclusion : validation ou non du bon fonctionnement du module.
+		\item width, height : largeur, hauteur
+		\item words\_per\_row : nombres de valeurs que l'on peut stocké sur une ligne
+		\item data : contenu de la grille
+		\item mode : mode de jeu
 		\end{itemize}
-	
-		\subsection{Module 1}
-		\subsection{Module 2}
-		\subsection{Module 3}
-	
-	\section{Bilan}	
-		\subsection{État d’avancement}
 		
-			Où en est le projet ? A-t-on atteint les objectifs ?
-			
-			Quels modules restent à finaliser (ou à perfectionner pour être en accord avec les spécifications techniques) ?
-			
-		\subsection{Pertinence de la solution technique}
-			
-			Quelles sont les limites techniques de la solution développée ?
-			
-			Quelles sont les possibilités d’évolution ou de poursuite ?
-			
-		\subsection{Bilan sur le travail d’équipe}
+		On définit le nombre de caractères nécessaires pour stocker une ligne par :
+		\[
+		\textit{words\_per\_row} = \left\lceil \frac{\textit{width}}{W} \right\rceil
+		\]
+		où \textit{width} est la largeur de la grille en bits, et \(W\) est la taille d'un mot (généralement 64 bits).
+		Cela correspond au nombre de blocs de 64 bits nécessaires pour représenter une ligne.
+		\newline
+		Comme notre strucutre n'est composé que de uint64\_t cela nous permet d'optimiser notre espace mémoire.
+		\newline\newline
+		La génération des tours se fait sur le système du jeu de la vie, on observe les voisins autour de notre cellule et on estime si la cellule doit vivre ou mourir. On stocke la prochaine valeur de l'emplacement de la cellule dans la prochaine grille \textit{Next}. Qui sera donc par la suite la grille courante jusqu'à la dernière génération demandé par l'utilisateur.
+		\newline
+		Pour charger une configuration on lit dans le fichier texte ce qui va nous permettre de remplir notre grille automatiquement, on prends donc les 64 premières caractères qu'on va tranformer en \textit{0} pour une cellule \textbf{morte} ou \textit{1} pour une cellule \textbf{vivante}. Dans l'autre cas, si l'on souhaite sauvergarder, nous allons utiliser la largeur et la hauteur de notre grille afin de récupérer les bonnes valeurs et d'obtenir un résultat propre et lisible.
+		\newline\newline
+		\textbf{Calcul d'une nouvelle génération :}
 		
-			Qu’avez-vous appris individuellement ? Quelles compétences vont pouvoir être mises en avant lors de votre prochaine recherche de stage ?
-			
-			Comment l’équipe aurait pu mieux s’organiser ? Proposer un plan d’action pour le prochain projet.
+		Pour chaque cellule $(x,y)$ de la grille on utilise le \textbf{bit-packing} :
+
 	
-	\newpage	
-	\section{Sources}
-		
-		Documents utilisés et sites internet consultés pour développer le projet.
-		
-		\textbf{NB} : voir le document « comment rédiger un rapport » sur la page Moodle La Toolbox pour la syntaxe	à utiliser pour vos citations.
+	Chaque cellule $(x,y)$ est stockée dans un \emph{word} de 64 bits pour économiser de la mémoire.  
 	
-	\newpage
+	\begin{enumerate}
+		\item \textbf{Identifier le mot contenant la cellule :}  
+		Comme chaque word contient 64 cellules, l'indice du word dans la grille est :
+		\[
+		word\_index = y \cdot words\_per\_row + (x \gg 6)
+		\]
+		Ici, $x \gg 6$ correspond à $x / 64$, c'est-à-dire dans quel word de la ligne se trouve la cellule.
+		
+		\item \textbf{Identifier le bit correspondant :}  
+		La position de la cellule dans ce word est :
+		\[
+		bit\_index = x \& 63
+		\]
+		L'opération \& 63 équivaut à $x \b modulo 64$ et donne quel bit du word correspond à la cellule.
+		
+		\item \textbf{Créer un masque pour isoler la cellule :}  
+		On construit un \emph{mask} qui a un 1 uniquement à la position du bit de la cellule :
+		\[
+		mask = 1 \ll bit\_index
+		\]
+		Ce masque permet de lire ou modifier uniquement ce bit.
+		
+		\item \textbf{Lecture de la cellule :}  
+		Pour savoir si la cellule est vivante ou morte :
+		\[
+		état = (word \& mask) \neq 0
+		\]
+		
+		\item \textbf{Écriture de la cellule :}  
+		Pour mettre la cellule vivante : 
+		\[
+		word |= mask
+		\] 
+		Pour la mettre morte :
+		\[
+		word \&= \sim mask
+		\]
+		\end{enumerate}
+		
+	\textbf{Estimation et contrôle du temps de simulation :}
+	
+	La simulation mesure le temps nécessaire pour calculer chaque génération et ajuste l'affichage pour respecter une cadence cible (\texttt{target\_hz}).
+	Pour chaque génération, on mesure le temps CPU nécessaire à la fonction \texttt{next\_generation} via \texttt{clock\_gettime(CLOCK\_MONOTONIC)}.  
+	La durée de calcul par génération est la soustraction entre le timer à la fin de la génération et celui au début de la génération.
+	\newline\newline
+	Après le calcul, la simulation attend le temps restant pour atteindre la cadence exacte, en utilisant \texttt{nanosleep} si nécessaire.
+	\newline\newline
+	On mesure le temps complet d'une frame (calcul + attente) 
+	\newline
+	Après toutes les générations, on calcule :
+	\begin{itemize}
+		\item le temps moyen par frame 
+		\item le pire temps observé 
+		\item le jitter : Soustraction entre le pire temps et le meilleur temps
+	\end{itemize}
+	
+	Pour optimiser le code minimise donc l'utilisation du CPU en dormant quand le temps restant avant la prochaine frame est suffisant, garantissant une cadence stable même si le calcul est rapide.
+	\newline\newline
+	\textbf{Affichage de la grille :} \newline
+	Enfin, pour afficher la grille on récupère toutes les cellules de notre grille et affichons \textit{'X'} si celle-ci est vivante et \textit{'-'} dans l'autre cas si elle est morte 
+
+		
+	\section{Résultat de mesure de temps}
+	
+	Sur 1000 générations et une grille de 100x100 voici les résultats obtenus pour un total de 1000 générations.
+	
+
+
+
+	\begin{figure}[H]   % H = strictement ici
+		\centering
+		\includegraphics[width=0.5\linewidth]{images/screenshot001}
+		\caption{Temps de mesure pour 1000 générations sur une grille 100x100 générée aléatoirement}
+		\label{fig:screenshot001}
+	\end{figure}
+
+	
+	Nous pourrions donc nous demander : comment se fait-il que notre code n'atteint pas exactement les 60 Hz, soit 16.667 ms.
+	
+	Cela s'explique car la fonction \textit{printf}, qui nous sert à afficher notre grille, prend un petit peu de temps, rendant notre résultat imprécis. En revanche, si on enlève notre affichage, voici ce que cela donne :
+
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.5\linewidth]{images/screenshot002}
+ 		\caption{Temps de mesure pour 1000 générations sur une grille 100x100 générée aléatoirement sans printf}
+ 		\label{fig:screenshot002}
+ 	\end{figure}
+ 	
+	On observe ici une mesure parfaite car 60hz = 16.667ms de même si on passe à 120hz le résultat est le suivant : 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{images/screenshot003}
+		\caption{Estimation du temps ave une target\_hz à 120hz}
+		\label{fig:screenshot003}
+	\end{figure}
+	On obtient encore \textbf{le résultat attendu}.
+	
+	\section{Réponses aux questions}
+
+	\textbf{Question 1 :} Comment détecter automatiquement un oscillateur dans votre
+	programme ? Pouvez-vous concevoir un moyen de démontrer qu’un motif est
+	entré dans un cycle ?
+	\newline
+	Un oscillateur est un motif qui se répète, des motifs stables dans le jeu de la vie existent : 
+	\newline Exemple de motifs stable : 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{images/screenshot005}
+		\caption{Motifs stables}
+		\label{fig:screenshot005}
+	\end{figure}
+	
+	On observe donc ici que le motif de répète, afin d'identifier un motif répétitif nous pourrions enregistrer les grilles précédentes afin d'observer si sur des zones les cellules sont dans le même état qu'une grille précédente, ainsi il serait possible d'identifier des schémas et donc des oscillateurs. \newline\newline
+	\textbf{Questions 2 :} Que doit-il se passer si l’utilisateur demande une grille trop grande
+	par rapport à la mémoire disponible ? Le programme doit-il s’arrêter
+	proprement avec un message clair, refuser l’entrée ou proposer une réduction
+	automatique de la taille ?\newline
+	
+	Étant donné une limite stricte de mémoire de 64 KiB pour le monde 2D, il faut d'abord calculer le nombre de bits nécessaires pour stocker la grille :
+	
+	\[
+	\textit{bits\_nécessaires} = \textit{width} \times \textit{height}
+	\]
+	
+	\[
+	\textit{octets\_nécessaires} = \frac{\textit{bits\_nécessaires}}{8}
+	\]
+	
+	Puisque 64 KiB = 65\,536 octets, on doit vérifier :
+	
+	\[
+	\textit{octets\_nécessaires} \le 65\,536
+	\]
+	
+	\bigskip
+	
+	\textbf{Pour gérer une grille trop grande il fraudrait donc :} 
+	
+	\begin{itemize}
+		\item \textbf{Option 1 : arrêt propre} – le programme refuse la création de la grille et affiche un message clair à l'utilisateur.
+		\item \textbf{Option 2 : réduction automatique} – le programme ajuste la largeur et la hauteur pour que la grille tienne dans la mémoire disponible.
+		\item \textbf{Option 3 : saisie répétée} – l'utilisateur est invité à entrer de nouvelles dimensions.
+	\end{itemize}
+	
+	Cette vérification permettrais d'éviter les débordements mémoire et les comportements indéfinis lors de la création de grilles trop grandes.\newline
+	
+	\textbf{Question 3 : }Comment un planeur (glider) se comporterait-il dans chacun de ces
+	cas ?\newline
+	Exemple de planeur : 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{images/screenshot004}
+		\caption{Planeurs motifs}
+		\label{fig:screenshot004}
+	\end{figure}
+	Le planeur se déplace diagonalement à travers la grille en répétant un motif cyclique. Si la grille utilise des bords de type \textbf{Edge}, tout ce qui sort de la grille est considéré comme mort, ce qui signifie que le planeur finira par se heurter à un bord et sera détruit après quelques générations. Avec un bord \textbf{Toroidal} ou tore, la grille s'enroule sur elle-même : le planeur qui atteint le bord droit réapparaît immédiatement sur le bord gauche, et de même pour le haut et le bas, permettant au planeur de se déplacer indéfiniment sans interruption. Dans le cas d'un bord \textbf{Mirror}, les coordonnées au-delà de la grille se reflètent à l'intérieur, de sorte que le planeur se heurtera virtuellement à son reflet, modifiant sa trajectoire et pouvant perturber son mouvement régulier. Enfin, avec une \textbf{Alive rim}, toutes les cellules en dehors de la grille sont considérées comme vivantes, ce qui aura pour effet de bloquer ou de transformer le planeur lorsqu’il atteint les bords, provoquant souvent la destruction ou la modification du motif initial. Ainsi, le comportement d'un planeur dépend fortement de la façon dont les bords sont traités, allant de la destruction rapide à un déplacement infini ou à des perturbations de sa trajectoire.
+	
+	\begin{figure}[H]
+		\centering
+		% Première figure
+		\begin{minipage}{0.10\linewidth}
+			\centering
+			\includegraphics[width=\linewidth]{screenshot001}
+			\caption{Glider 32x32}
+			\label{fig:screenshot001}
+		\end{minipage}
+		\hspace{0.01\linewidth}
+		% Deuxième figure
+		\begin{minipage}{0.18\linewidth}
+			\centering
+			\includegraphics[width=\linewidth]{screenshot002}
+			\caption{Bordure edge}
+			\label{fig:screenshot002}
+		\end{minipage}
+		\hspace{0.01\linewidth}
+		% Troisième figure
+		\begin{minipage}{0.18\linewidth}
+			\centering
+			\includegraphics[width=\linewidth]{screenshot003}
+			\caption{Bordure torus}
+			\label{fig:screenshot003}
+		\end{minipage}
+		\hspace{0.01\linewidth}
+		% Quatrième figure
+		\begin{minipage}{0.18\linewidth}
+			\centering
+			\includegraphics[width=\linewidth]{screenshot004}
+			\caption{Bordure mirror}
+			\label{fig:screenshot004}
+		\end{minipage}
+		\hspace{0.01\linewidth}
+		% Cinquième figure
+		\begin{minipage}{0.18\linewidth}
+			\centering
+			\includegraphics[width=\linewidth]{screenshot005}
+			\caption{Bordure rim}
+			\label{fig:screenshot005}
+		\end{minipage}
+	\end{figure}
+	
+	Cette observation concernant les gliders nous permet de confirmer dans un premier temps que la génération de notre projet marche mais aussi que notre gestion des différentes bordures fonctionnent. En effet, pour la bordure \textbf{edge} le glider s'arrête au moment où il touche le mur et devient un motif stable. Pour la bordure \textbf{torus} elle va bien de l'autre côté de la grille, pour la \textbf{mirror} deux gliders se touchent amenant le glider dans un état stable enfin la bordure \textbf{rim} nous montre que le glider rentre en collision avec les cellules qui sont partis de l'extérieur cosant une collision.
+	
+	
+	\section{Résultat du projet}
+	Notre projet fonctionne dans son intégralité. En effet toutes les étapes sont correctement implémenté et permettent le bon fonctionnement du jeu et dans la limite du temps demandé.\newline
+	Voici une illustration complète d'un déroulé du jeu : \newline
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.0\linewidth]{screenshot006}
+		\caption{Lancement du code avec paramètres}
+		\label{fig:screenshot006}
+	\end{figure}
+	
+	\begin{figure} [H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{screenshot007}
+		\caption{Execution du code avec affichage ou sans affichage (100x100)}
+		\label{fig:screenshot007}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{screenshot008}
+		\caption{Estimation du temps de calcul}
+		\label{fig:screenshot008}
+	\end{figure}
+
+	Nous avons donc, après différents tests pu observer que notre projet fonctionnait dans son intégralité respectant le cahier des charges.
+	
+	
+	\section{Makefile}
+	Afin d'obtenir un moyen plus simple de compiler et d'utiliser un fichier makefile afin d'éxécuter la commande de compilation en utilisant simplement le mot clé \textbf{make} 
+	
+	Ansi notre makefile est capable d'éxécuter la commande suivante : 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{screenshot009}
+		\caption{}
+		\label{fig:screenshot009}
+	\end{figure}
+	
+	
+	\section{Réflexion sur le projet}
+
+	\subsection*{Réflexion d'ingénieur embarqué}
+	
+	Ce projet nous a permis de réfléchir comme des ingénieurs embarqués, en prenant en compte les contraintes spécifiques des systèmes à ressources limitées. Travailler sur le \textit{Jeu de la Vie} nous a confrontés à des choix fondamentaux sur la manière de représenter et de traiter les données efficacement.
+	
+	En particulier, nous avons compris l'importance de l'optimisation mémoire. Sur une grille de grande taille, il devient rapidement impossible de stocker chaque cellule de manière naïve. Cette contrainte nous a poussés à envisager des représentations plus compactes, comme l'utilisation de bits individuels pour chaque cellule, et à réfléchir à la structure des données afin de minimiser l'utilisation de la mémoire sans sacrifier la clarté du code.
+	
+	De plus, la réflexion sur le temps de calcul nous a appris à ne pas considérer chaque opération de manière isolée. En systèmes embarqués, chaque boucle et chaque condition peut avoir un impact significatif sur les performances globales. Nous avons ainsi été amenés à penser à des stratégies pour réduire le nombre de calculs inutiles, comme se concentrer sur les cellules susceptibles de changer d'état ou optimiser le parcours de la grille.
+	
+	Enfin, ce projet nous a fait réaliser que penser comme des ingénieurs embarqués ne consiste pas seulement à coder : il s'agit d'anticiper les limitations matérielles, de prendre des décisions conscientes sur la gestion des ressources et de concevoir des solutions pragmatiques. Cette approche influence non seulement l'efficacité du programme, mais aussi la qualité globale du design logiciel dans un contexte embarqué.
+	
+	
+
 	\section{Annexes}
-		Documents volumineux, éventuels codes (\textbf{\textcolor{red}{pas de code dans le rapport}}).
+	Le code disponible sur \textbf{Github :} \href{https://github.com/Tristoun/Jeu\_de\_la\_vie\_C}{https://github.com/Tristoun/Jeu\_de\_la\_vie\_C}
+	
 
 \end{document}

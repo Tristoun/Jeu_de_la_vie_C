@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.11.29)  29 NOV 2025 01:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.11.29)  30 NOV 2025 23:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -67,6 +67,14 @@ Package babel Info: You haven't specified a language as a class or package
 Language: nil 2024/01/07 v24.1 Nil language
 \l@nil=\language6
 ))
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count197
+\float@exts=\toks18
+\float@box=\box51
+\@float@everytoks=\toks19
+\@floatcapt=\box52
+)
 (/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 
@@ -76,9 +84,9 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 (/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2022/02/03 v1.0f TeX engine tests
 ))
-\Gm@cnth=\count197
-\Gm@cntv=\count198
-\c@Gm@tempcnt=\count199
+\Gm@cnth=\count198
+\Gm@cntv=\count199
+\c@Gm@tempcnt=\count266
 \Gm@bindingoffset=\dimen142
 \Gm@wd@mp=\dimen143
 \Gm@odd@mp=\dimen144
@@ -87,7 +95,7 @@ Package: iftex 2022/02/03 v1.0f TeX engine tests
 \Gm@layoutheight=\dimen147
 \Gm@layouthoffset=\dimen148
 \Gm@layoutvoffset=\dimen149
-\Gm@dimlist=\toks18
+\Gm@dimlist=\toks20
 )
 (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
@@ -159,13 +167,14 @@ Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
 \caption@hangindent=\dimen159
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count266
-\c@continuedfloat=\count267
+\c@caption@flags=\count267
+\c@continuedfloat=\count268
+Package caption Info: float package is loaded.
 )
 Package caption Info: New subtype `subfigure' on input line 238.
-\c@subfigure=\count268
+\c@subfigure=\count269
 Package caption Info: New subtype `subtable' on input line 238.
-\c@subtable=\count269
+\c@subtable=\count270
 )
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2024-01-20 v7.01h Hypertext links for LaTeX
@@ -211,15 +220,15 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count270
+\c@section@level=\count271
 )
 (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count271
+\etb@tempcnta=\count272
 )
 \@linkdim=\dimen160
-\Hy@linkcounter=\count272
-\Hy@pagecounter=\count273
+\Hy@linkcounter=\count273
+\Hy@pagecounter=\count274
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2024-01-20 v7.01h Hyperref: PDFDocEncoding definition (HO)
@@ -229,7 +238,7 @@ Now handling font encoding PD1 ...
 (/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count274
+\Hy@SavedSpaceFactor=\count275
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2024-01-20 v7.01h Hyperref: PDF Unicode definition (HO)
@@ -244,7 +253,7 @@ Package hyperref Info: Plain pages OFF on input line 4194.
 Package hyperref Info: Backreferencing OFF on input line 4199.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4446.
-\c@Hy@tempcnt=\count275
+\c@Hy@tempcnt=\count276
 
 (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip16
@@ -260,7 +269,7 @@ Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count276
+\Fld@menulength=\count277
 \Field@Width=\dimen162
 \Fld@charsize=\dimen163
 Package hyperref Info: Hyper figures OFF on input line 6063.
@@ -275,9 +284,9 @@ Package hyperref Info: PDF/A mode OFF on input line 6093.
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count277
-\c@Item=\count278
-\c@Hfootnote=\count279
+\Hy@abspage=\count278
+\c@Item=\count279
+\c@Hfootnote=\count280
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
@@ -289,8 +298,8 @@ Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
 kage
 with kernel methods
 )
-\Fld@listcount=\count280
-\c@bookmark@seq@number=\count281
+\Fld@listcount=\count281
+\c@bookmark@seq@number=\count282
 
 (/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
@@ -305,30 +314,46 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count282
-\l__pdf_internal_box=\box51
+\l__color_backend_stack_int=\count283
+\l__pdf_internal_box=\box53
 )
-(./rapport-projet-fr.aux)
+(./rapport-projet-fr.aux
+
+LaTeX Warning: Label `fig:screenshot001' multiply defined.
+
+
+LaTeX Warning: Label `fig:screenshot002' multiply defined.
+
+
+LaTeX Warning: Label `fig:screenshot003' multiply defined.
+
+
+LaTeX Warning: Label `fig:screenshot004' multiply defined.
+
+
+LaTeX Warning: Label `fig:screenshot005' multiply defined.
+
+)
 \openout1 = `rapport-projet-fr.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -366,17 +391,17 @@ LaTeX Font Info:    ... okay on input line 42.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count283
+\scratchcounter=\count284
 \scratchdimen=\dimen164
-\scratchbox=\box52
-\nofMPsegments=\count284
-\nofMParguments=\count285
-\everyMPshowfont=\toks19
-\MPscratchCnt=\count286
+\scratchbox=\box54
+\nofMPsegments=\count285
+\nofMParguments=\count286
+\everyMPshowfont=\toks21
+\MPscratchCnt=\count287
 \MPscratchDim=\dimen165
-\MPnumerator=\count287
-\makeMPintoPDFobject=\count288
-\everyMPtoPDFconversion=\toks20
+\MPnumerator=\count288
+\makeMPintoPDFobject=\count289
+\everyMPtoPDFconversion=\toks22
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -389,25 +414,25 @@ e
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 42.
+Package hyperref Info: Link coloring ON on input line 43.
 
 (./rapport-projet-fr.out) (./rapport-projet-fr.out)
 \@outlinefile=\write3
 \openout3 = `rapport-projet-fr.out'.
 
-<images/ece.png, id=124, 2463.9553pt x 871.75688pt>
+<images/ece.png, id=40, 2463.9553pt x 871.75688pt>
 File: images/ece.png Graphic file (type png)
 <use images/ece.png>
-Package pdftex.def Info: images/ece.png  used on input line 82.
+Package pdftex.def Info: images/ece.png  used on input line 83.
 (pdftex.def)             Requested size: 170.71652pt x 60.39072pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 82.
+(Font)              <10.95> on input line 83.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 82.
+(Font)              <8> on input line 83.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 82.
+(Font)              <6> on input line 83.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 82.
+(Font)              <12> on input line 83.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/ece.png>] (./rapp
@@ -417,7 +442,7 @@ ort-projet-fr.toc)
 
 File: images/ece.png Graphic file (type png)
 <use images/ece.png>
-Package pdftex.def Info: images/ece.png  used on input line 86.
+Package pdftex.def Info: images/ece.png  used on input line 87.
 (pdftex.def)             Requested size: 56.9055pt x 20.1258pt.
 
 
@@ -429,9 +454,248 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-12.20583pt}.
 
 [2]
+<images/Logigrammejeuelavie.drawio.png, id=69, 922.44624pt x 127.47626pt>
+File: images/Logigrammejeuelavie.drawio.png Graphic file (type png)
+<use images/Logigrammejeuelavie.drawio.png>
+Package pdftex.def Info: images/Logigrammejeuelavie.drawio.png  used on input l
+ine 91.
+(pdftex.def)             Requested size: 507.347pt x 70.11215pt.
+
+Overfull \hbox (23.65013pt too wide) in paragraph at lines 90--95
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 90--95
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 90--95
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 108--119
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 108--119
+
+ []
+
 File: images/ece.png Graphic file (type png)
 <use images/ece.png>
-Package pdftex.def Info: images/ece.png  used on input line 149.
+Package pdftex.def Info: images/ece.png  used on input line 137.
+(pdftex.def)             Requested size: 56.9055pt x 20.1258pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 24.20583pt, for example:
+(fancyhdr)                \setlength{\headheight}{24.20583pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-12.20583pt}.
+
+[3 <./images/Logigrammejeuelavie.drawio.png>]
+
+LaTeX Warning: Command \b invalid in math mode on input line 138.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 150.
+
+Missing character: There is no é in font cmr10!
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 1
+66.
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+)
+Overfull \hbox (0.97137pt too wide) in paragraph at lines 166--175
+\T1/cmr/m/n/10.95 la fonction \T1/cmtt/m/n/10.95 next_generation \T1/cmr/m/n/10
+.95 via \T1/cmtt/m/n/10.95 clock_gettime(CLOCK_MONOTONIC)\T1/cmr/m/n/10.95 . La
+ durée de calcul par génération
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 166--175
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 166--175
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 181--185
+
+ []
+
+<images/screenshot001.png, id=83, 304.13625pt x 79.79813pt>
+File: images/screenshot001.png Graphic file (type png)
+<use images/screenshot001.png>
+Package pdftex.def Info: images/screenshot001.png  used on input line 196.
+(pdftex.def)             Requested size: 241.84843pt x 63.45746pt.
+File: images/ece.png Graphic file (type png)
+<use images/ece.png>
+Package pdftex.def Info: images/ece.png  used on input line 204.
+(pdftex.def)             Requested size: 56.9055pt x 20.1258pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 24.20583pt, for example:
+(fancyhdr)                \setlength{\headheight}{24.20583pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-12.20583pt}.
+
+[4 <./images/screenshot001.png>]
+<images/screenshot002.png, id=95, 304.13625pt x 79.79813pt>
+File: images/screenshot002.png Graphic file (type png)
+<use images/screenshot002.png>
+Package pdftex.def Info: images/screenshot002.png  used on input line 208.
+(pdftex.def)             Requested size: 241.84843pt x 63.45746pt.
+<images/screenshot003.png, id=96, 304.13625pt x 79.79813pt>
+File: images/screenshot003.png Graphic file (type png)
+<use images/screenshot003.png>
+Package pdftex.def Info: images/screenshot003.png  used on input line 216.
+(pdftex.def)             Requested size: 241.84843pt x 63.45746pt.
+<images/screenshot005.png, id=97, 491.58656pt x 152.82094pt>
+File: images/screenshot005.png Graphic file (type png)
+<use images/screenshot005.png>
+Package pdftex.def Info: images/screenshot005.png  used on input line 232.
+(pdftex.def)             Requested size: 338.58632pt x 105.26pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 237--242
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 237--242
+
+ []
+
+File: images/ece.png Graphic file (type png)
+<use images/ece.png>
+Package pdftex.def Info: images/ece.png  used on input line 247.
+(pdftex.def)             Requested size: 56.9055pt x 20.1258pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 24.20583pt, for example:
+(fancyhdr)                \setlength{\headheight}{24.20583pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-12.20583pt}.
+
+[5 <./images/screenshot002.png> <./images/screenshot003.png> <./images/screensh
+ot005.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 269--270
+
+ []
+
+<images/screenshot004.png, id=108, 581.92406pt x 332.74312pt>
+File: images/screenshot004.png Graphic file (type png)
+<use images/screenshot004.png>
+Package pdftex.def Info: images/screenshot004.png  used on input line 276.
+(pdftex.def)             Requested size: 338.58632pt x 193.60548pt.
+<screenshot001.png, id=109, 171.64125pt x 661.72218pt>
+File: screenshot001.png Graphic file (type png)
+<use screenshot001.png>
+Package pdftex.def Info: screenshot001.png  used on input line 287.
+(pdftex.def)             Requested size: 48.37263pt x 186.4825pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 288--288
+|\T1/cmr/m/n/10.95 Glider
+ []
+
+<screenshot002.png, id=110, 259.7203pt x 530.73282pt>
+File: screenshot002.png Graphic file (type png)
+<use screenshot002.png>
+Package pdftex.def Info: screenshot002.png  used on input line 295.
+(pdftex.def)             Requested size: 87.06189pt x 177.9039pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 296--296
+[]\T1/cmr/bx/n/10.95 Figure 7:
+ []
+
+<screenshot003.png, id=111, 301.125pt x 585.68813pt>
+File: screenshot003.png Graphic file (type png)
+<use screenshot003.png>
+Package pdftex.def Info: screenshot003.png  used on input line 303.
+(pdftex.def)             Requested size: 87.06189pt x 169.3358pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 304--304
+[]\T1/cmr/bx/n/10.95 Figure 8:
+ []
+
+<screenshot004.png, id=112, 303.38344pt x 613.54219pt>
+File: screenshot004.png Graphic file (type png)
+<use screenshot004.png>
+Package pdftex.def Info: screenshot004.png  used on input line 311.
+(pdftex.def)             Requested size: 87.06189pt x 176.06902pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 312--312
+[]\T1/cmr/bx/n/10.95 Figure 9:
+ []
+
+<screenshot005.png, id=113, 261.97874pt x 578.91281pt>
+File: screenshot005.png Graphic file (type png)
+<use screenshot005.png>
+Package pdftex.def Info: screenshot005.png  used on input line 319.
+(pdftex.def)             Requested size: 87.06189pt x 192.3845pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 320--320
+[]\T1/cmr/bx/n/10.95 Figure 10:
+ []
+
+File: images/ece.png Graphic file (type png)
+<use images/ece.png>
+Package pdftex.def Info: images/ece.png  used on input line 324.
+(pdftex.def)             Requested size: 56.9055pt x 20.1258pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 24.20583pt, for example:
+(fancyhdr)                \setlength{\headheight}{24.20583pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-12.20583pt}.
+
+[6 <./images/screenshot004.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 329--331
+
+ []
+
+<screenshot006.png, id=120, 944.02687pt x 63.98906pt>
+File: screenshot006.png Graphic file (type png)
+<use screenshot006.png>
+Package pdftex.def Info: screenshot006.png  used on input line 334.
+(pdftex.def)             Requested size: 483.69687pt x 32.78726pt.
+<screenshot007.png, id=121, 777.65532pt x 1132.98282pt>
+File: screenshot007.png Graphic file (type png)
+<use screenshot007.png>
+Package pdftex.def Info: screenshot007.png  used on input line 341.
+(pdftex.def)             Requested size: 338.58632pt x 493.31032pt.
+File: images/ece.png Graphic file (type png)
+<use images/ece.png>
+Package pdftex.def Info: images/ece.png  used on input line 345.
+(pdftex.def)             Requested size: 56.9055pt x 20.1258pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 24.20583pt, for example:
+(fancyhdr)                \setlength{\headheight}{24.20583pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-12.20583pt}.
+
+[7 <./screenshot001.png> <./screenshot002.png> <./screenshot003.png> <./screens
+hot004.png> <./screenshot005.png> <./screenshot006.png>]
+<screenshot008.png, id=135, 307.1475pt x 80.55093pt>
+File: screenshot008.png Graphic file (type png)
+<use screenshot008.png>
+Package pdftex.def Info: screenshot008.png  used on input line 348.
+(pdftex.def)             Requested size: 241.84843pt x 63.42682pt.
+File: images/ece.png Graphic file (type png)
+<use images/ece.png>
+Package pdftex.def Info: images/ece.png  used on input line 359.
 (pdftex.def)             Requested size: 56.9055pt x 20.1258pt.
 
 
@@ -442,10 +706,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-12.20583pt}.
 
-[3]
+[8 <./screenshot007.png> <./screenshot008.png>]
+<screenshot009.png, id=144, 576.65437pt x 42.91031pt>
+File: screenshot009.png Graphic file (type png)
+<use screenshot009.png>
+Package pdftex.def Info: screenshot009.png  used on input line 362.
+(pdftex.def)             Requested size: 338.58632pt x 25.19571pt.
 File: images/ece.png Graphic file (type png)
 <use images/ece.png>
-Package pdftex.def Info: images/ece.png  used on input line 201.
+Package pdftex.def Info: images/ece.png  used on input line 386.
 (pdftex.def)             Requested size: 56.9055pt x 20.1258pt.
 
 
@@ -456,77 +725,45 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-12.20583pt}.
 
-[4]
-File: images/ece.png Graphic file (type png)
-<use images/ece.png>
-Package pdftex.def Info: images/ece.png  used on input line 203.
-(pdftex.def)             Requested size: 56.9055pt x 20.1258pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 24.20583pt, for example:
-(fancyhdr)                \setlength{\headheight}{24.20583pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-12.20583pt}.
-
-[5]
-File: images/ece.png Graphic file (type png)
-<use images/ece.png>
-Package pdftex.def Info: images/ece.png  used on input line 210.
-(pdftex.def)             Requested size: 56.9055pt x 20.1258pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 24.20583pt, for example:
-(fancyhdr)                \setlength{\headheight}{24.20583pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-12.20583pt}.
-
-[6]
-File: images/ece.png Graphic file (type png)
-<use images/ece.png>
-Package pdftex.def Info: images/ece.png  used on input line 214.
-(pdftex.def)             Requested size: 56.9055pt x 20.1258pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 24.20583pt, for example:
-(fancyhdr)                \setlength{\headheight}{24.20583pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-12.20583pt}.
-
-[7] (./rapport-projet-fr.aux)
+[9 <./screenshot009.png>] (./rapport-projet-fr.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
+
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `rapport-projet-fr.out' has not changed.
-(rerunfilecheck)             Checksum: 143B1DCF0BFA0F0F676DF219A9DB19A8;3924.
+(rerunfilecheck)             Checksum: 5BFC6FB8A74574B5E803EA69BD62B6A0;1143.
  ) 
 Here is how much of TeX's memory you used:
- 12188 strings out of 476182
- 194588 string characters out of 5795594
- 1935975 words of memory out of 5000000
- 34027 multiletter control sequences out of 15000+600000
- 569020 words of font info for 58 fonts, out of 8000000 for 9000
+ 12422 strings out of 476182
+ 200313 string characters out of 5795594
+ 1933975 words of memory out of 5000000
+ 34255 multiletter control sequences out of 15000+600000
+ 570023 words of font info for 60 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,16n,79p,421b,455s stack positions out of 10000i,1000n,20000p,200000b,200000s
- </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.6
-00pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx120
-0.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx
+ 75i,16n,79p,1358b,538s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.6
+00pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti109
+5.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm
 1095.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/e
-crm1200.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/e
-c/ecrm1095.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jknappe
-n/ec/ecbx2074.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jkna
-ppen/ec/ecrm1440.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/j
-knappen/ec/ecbx1440.600pk>
-Output written on rapport-projet-fr.pdf (7 pages, 438500 bytes).
+cbx1200.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/e
+c/ecbx1095.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jknappe
+n/ec/ecrm1200.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/jkna
+ppen/ec/ecrm1095.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfour/j
+knappen/ec/ecbx2074.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/ljfou
+r/jknappen/ec/ecrm1440.600pk> </home/tristan/.texlive2023/texmf-var/fonts/pk/lj
+four/jknappen/ec/ecbx1440.600pk></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+10.pfb>
+Output written on rapport-projet-fr.pdf (9 pages, 790778 bytes).
 PDF statistics:
- 497 PDF objects out of 1000 (max. 8388607)
- 224 compressed objects within 3 object streams
- 40 named destinations out of 1000 (max. 500000)
- 246 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 535 PDF objects out of 1000 (max. 8388607)
+ 162 compressed objects within 2 object streams
+ 37 named destinations out of 1000 (max. 500000)
+ 153 words of extra memory for PDF output out of 10000 (max. 10000000)
 

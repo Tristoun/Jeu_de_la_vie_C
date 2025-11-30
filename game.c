@@ -39,7 +39,7 @@ timing_stats play_game_live(grid *current, grid *next, int generations, int targ
         *next = tmp;
 
         clock_gettime(CLOCK_MONOTONIC, &calc_end);
-        double calc_ms = diff_ms(calc_start, calc_end);
+        diff_ms(calc_start, calc_end);
 
         // --- Maintien exact de la cadence ---
         long target_ns = (gen + 1) * interval_ns;
